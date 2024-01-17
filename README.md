@@ -9,7 +9,7 @@ The metrics used are Rouge-L and BLEU. This test-bench was used for a paper titl
 
 ### Installation:
 
-1. Clone the repository using ``git clone [soon]``
+1. Clone the repository using ``git clone https://github.com/AssistantsLab/AssistantsLab-summariser-testbench``
 2. If you want to use custom data, edit the ``json_file_path`` in ``utils.py`` or modify the ``samples/samples/data_prefixes.json``.
 
 ### Using the program 
