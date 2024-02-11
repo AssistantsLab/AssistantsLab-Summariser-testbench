@@ -10,7 +10,9 @@ The metrics used are Rouge-L and BLEU. This test-bench was used for a paper titl
 ### Installation:
 
 1. Clone the repository using ``git clone https://github.com/AssistantsLab/AssistantsLab-summariser-testbench``
-2. If you want to use custom data, edit the ``json_file_path`` in ``utils.py`` or modify the ``samples/samples/data_prefixes.json``.
+2. In the cloned repository, run the command ``pip install -r requirements.txt``.
+3. (OPTIONAL) If you want to use custom data, edit the ``json_file_path`` in ``utils.py`` or modify the ``samples/samples/data_prefixes.json``.
+4. (OPTIONAL) If you would like to utilize your GPU, consider upgrading the `torch` dependency according to [https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
 
 ### Using the program 
 
