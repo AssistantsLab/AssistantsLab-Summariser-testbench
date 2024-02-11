@@ -78,14 +78,32 @@ class Evaluation:
         print("\nFinished generating samples and evaluation scores")
         print("\n-==+==--\n")
 
-        # Compute combined scores and sort models
         combined_scores = {}
         for model in self.models:
             rouge_scores = self.rouge_scores[model]
             bleu_scores = self.bleu_scores[model]
-            combined_scores[model] = [(rouge * 0.6 + bleu * 0.4) for rouge, bleu in zip(rouge_scores, bleu_scores)]
 
-        sorted_models = sorted(self.models, key=lambda model: statistics.mean(combined_scores[model]), reverse=True)
+            # Check if both Rouge and Bleu scores are available
+            if all(score is not None for score in rouge_scores) and all(score is not None for score in bleu_scores):
+                # Calculate combined scores
+                combined_scores[model] = [(rouge * 0.6 + bleu * 0.4) for rouge, bleu in zip(rouge_scores, bleu_scores)]
+            elif any(score is not None for score in rouge_scores):
+                # Sort by Rouge score if only Rouge scores are available
+                combined_scores[model] = rouge_scores
+            elif any(score is not None for score in bleu_scores):
+                # Sort by Bleu score if only Bleu scores are available
+                combined_scores[model] = bleu_scores
+
+        # Define the sorting key function
+        def sorting_key(model_key):
+            scores = combined_scores.get(model_key, [])
+            if scores:
+                return statistics.mean(scores)
+            else:
+                # Return a very low value if there are no scores available
+                return float('-inf')
+
+        sorted_models = sorted(self.models, key=sorting_key, reverse=True)
 
         if self.output_to_file:
             raise NotImplementedError
